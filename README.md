@@ -1,1 +1,1 @@
-# dont-get-hit-sti-edition
+# Don't Get Hit! STI Edition
