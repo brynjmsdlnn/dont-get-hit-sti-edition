@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         targetPosition = transform.position + direction * gridSize;
 
         // Check for obstacles using Raycast (or OverlapBox for broader checks)
-        if (!Physics.Raycast(transform.position, direction, gridSize * 1.1f, obstacleLayer))
+        if (!Physics.Raycast(transform.position, direction, gridSize * 1.2f, obstacleLayer))
         {
             isMoving = true;
         }
