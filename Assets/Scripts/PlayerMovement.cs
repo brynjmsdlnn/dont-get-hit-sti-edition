@@ -33,23 +33,15 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Handle input for movement
+            // Continuous movement (optional: replace GetKeyDown with GetKey)
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-            {
                 TryMove(Vector3.forward);
-            }
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-            {
                 TryMove(Vector3.back);
-            }
             else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-            {
                 TryMove(Vector3.left);
-            }
             else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-            {
                 TryMove(Vector3.right);
-            }
         }
     }
 
@@ -58,10 +50,14 @@ public class PlayerMovement : MonoBehaviour
         // Calculate the target position
         targetPosition = transform.position + direction * gridSize;
 
-        // Check for obstacles in the path
-        if (!Physics.Raycast(transform.position, direction, gridSize, obstacleLayer))
+        // Check for obstacles using Raycast (or OverlapBox for broader checks)
+        if (!Physics.Raycast(transform.position, direction, gridSize * 1.1f, obstacleLayer))
         {
             isMoving = true;
+        }
+        else
+        {
+            Debug.Log("Obstacle detected!"); // Optional: Log collisions for debugging
         }
     }
 }
