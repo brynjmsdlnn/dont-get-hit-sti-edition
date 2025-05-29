@@ -10,11 +10,12 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isMoving = false;
     private Vector3 targetPosition;
+    private Vector3 startingPosition; // Store the starting position
 
     // Start is called before the first frame update
     void Start()
     {
-
+        startingPosition = transform.position; // Store the initial position
     }
 
     // Update is called once per frame
@@ -59,5 +60,26 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Obstacle detected!"); // Optional: Log collisions for debugging
         }
+    }
+
+    // Detect collision with vehicles
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log($"Collision with: {collision.gameObject.name} (Layer: {collision.gameObject.layer})");
+        Debug.Log($"Vehicle layer index: {LayerMask.NameToLayer("Vehicle")}");
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Vehicle"))
+        {
+            Debug.Log("Vehicle hit detected!");
+            ResetPosition();
+        }
+    }
+
+    // Reset the player's position to the starting position
+    private void ResetPosition()
+    {
+        transform.position = startingPosition;
+        isMoving = false; // Stop any ongoing movement
+
     }
 }

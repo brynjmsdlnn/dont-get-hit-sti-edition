@@ -5,29 +5,29 @@ using UnityEngine;
 /// <summary>
 /// Moves the obstacle horizontally between boundaries. Direction can be toggled.
 /// </summary>
-[RequireComponent(typeof(Transform))]
+[RequireComponent(typeof(Rigidbody))]
 public class MovingObstacles : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 0.25f;
     [SerializeField] private bool moveRight = true; // Toggle direction in the Inspector
     [SerializeField] private float boundary = 20f; // Replace the const with a serialized field
     [SerializeField] private float loopDelay = 0f; // Delay in seconds before resetting
-    private Transform thisTransform;
+    private Rigidbody rb;
     private bool isDelaying = false;
 
     private void Awake()
     {
-        thisTransform = transform; // 'transform' is cached for efficiency
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
 #if UNITY_EDITOR
-        Debug.Log($"my name is {gameObject.name} and my position is {thisTransform.localPosition}");
+        Debug.Log($"my name is {gameObject.name} and my position is {rb.position}");
 #endif
     }
 
-    private void Update()
+    private void FixedUpdate() // Use FixedUpdate for physics
     {
         if (!isDelaying)
         {
@@ -37,22 +37,14 @@ public class MovingObstacles : MonoBehaviour
 
     private void MoveObstacle()
     {
-        Vector3 curPos = thisTransform.localPosition;
-        float direction = moveRight ? 1 : -1; // Determine direction
-        float newX = curPos.x + moveSpeed * Time.deltaTime * direction;
+        float direction = moveRight ? 1 : -1;
+        Vector3 velocity = new Vector3(moveSpeed * direction, 0, 0);
+        rb.velocity = velocity; // Move via Rigidbody
 
-        // Handle boundary checks based on direction
-        if (moveRight && newX > boundary)
+        // Boundary check
+        if ((moveRight && rb.position.x > boundary) || (!moveRight && rb.position.x < -boundary))
         {
             StartCoroutine(DelayBeforeReset());
-        }
-        else if (!moveRight && newX < -boundary)
-        {
-            StartCoroutine(DelayBeforeReset());
-        }
-        else
-        {
-            thisTransform.localPosition = new Vector3(newX, curPos.y, curPos.z);
         }
     }
 
@@ -66,8 +58,10 @@ public class MovingObstacles : MonoBehaviour
 
     public void ResetPosition()
     {
-        thisTransform.localPosition = new Vector3(moveRight ? -boundary : boundary,
-                                                 thisTransform.localPosition.y,
-                                                 thisTransform.localPosition.z);
+        rb.position = new Vector3(
+            moveRight ? -boundary : boundary,
+            rb.position.y,
+            rb.position.z
+        );
     }
 }
