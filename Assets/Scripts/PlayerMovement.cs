@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f; // Speed of movement
     [SerializeField] private float gridSize = 1f; // Size of each grid cell
     [SerializeField] private LayerMask obstacleLayer; // Layer for obstacles
+
+    // Add this event to notify when game over occurs
+    public UnityEvent OnGameOver;
 
     private bool isMoving = false;
     private Vector3 targetPosition;
@@ -65,12 +69,10 @@ public class PlayerMovement : MonoBehaviour
     // Detect collision with vehicles
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"Collision with: {collision.gameObject.name} (Layer: {collision.gameObject.layer})");
-        Debug.Log($"Vehicle layer index: {LayerMask.NameToLayer("Vehicle")}");
-
         if (collision.gameObject.layer == LayerMask.NameToLayer("Vehicle"))
         {
             Debug.Log("Vehicle hit detected!");
+            OnGameOver.Invoke(); // Trigger game over
             ResetPosition();
         }
     }
@@ -80,6 +82,5 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position = startingPosition;
         isMoving = false; // Stop any ongoing movement
-
     }
 }
