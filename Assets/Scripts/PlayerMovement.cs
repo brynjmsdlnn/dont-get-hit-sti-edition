@@ -73,14 +73,16 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Vehicle"))
         {
             Debug.Log("Vehicle hit detected!");
-            lives--; // Decrement lives
+            lives--;
             if (lives <= 0)
             {
-                OnGameOver.Invoke(); // Trigger game over if no lives left
+                // Notify GameManager directly
+                FindObjectOfType<GameManager>().GameOver();
+                OnGameOver.Invoke();
             }
             else
             {
-                ResetPosition(); // Reuse existing function
+                ResetPosition();
             }
         }
     }

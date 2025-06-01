@@ -6,7 +6,7 @@ using TMPro;
 public class LivesUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text livesText;
-    [SerializeField] private PlayerMovement player;
+    [SerializeField] public PlayerMovement player;
 
     // Start is called before the first frame update
     void Start()
@@ -18,12 +18,22 @@ public class LivesUI : MonoBehaviour
         if (player == null)
         {
             player = FindObjectOfType<PlayerMovement>();
+            Debug.Log(player ? "Found player automatically" : "No player found");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        livesText.text = $"Lives: {player.lives}";
+        if (player != null)
+        {
+            livesText.text = $"Lives: {player.lives}";
+
+            // Extra safety check
+            if (player.lives <= 0)
+            {
+                FindObjectOfType<GameManager>().GameOver();
+            }
+        }
     }
 }

@@ -6,10 +6,17 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject characterSelectionPanel;
     [SerializeField] private GameTimer gameTimer;
 
     private void Start()
     {
+        // Show character selection at start
+        if (characterSelectionPanel != null)
+        {
+            characterSelectionPanel.SetActive(true);
+        }
+
         // Ensure game over panel is hidden at start
         if (gameOverPanel != null)
         {
@@ -20,6 +27,15 @@ public class GameManager : MonoBehaviour
         if (gameTimer == null)
         {
             gameTimer = FindObjectOfType<GameTimer>();
+        }
+    }
+
+    public void StartGame()
+    {
+        // Start the timer
+        if (gameTimer != null)
+        {
+            gameTimer.StartTimer();
         }
     }
 
@@ -43,16 +59,16 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        // Reset timescale FIRST
+        Time.timeScale = 1f;
+
         // Reset the timer
         if (gameTimer != null)
         {
             gameTimer.ResetTimer();
         }
 
-        // Resume time scale
-        Time.timeScale = 1f;
-
-        // Reload the current scene
+        // Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
