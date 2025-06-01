@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f; // Speed of movement
     [SerializeField] private float gridSize = 1f; // Size of each grid cell
     [SerializeField] private LayerMask obstacleLayer; // Layer for obstacles
+    [SerializeField] public int lives = 3; // Add lives property (editable in Inspector)
 
     // Add this event to notify when game over occurs
     public UnityEvent OnGameOver;
@@ -72,8 +73,15 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Vehicle"))
         {
             Debug.Log("Vehicle hit detected!");
-            OnGameOver.Invoke(); // Trigger game over
-            ResetPosition();
+            lives--; // Decrement lives
+            if (lives <= 0)
+            {
+                OnGameOver.Invoke(); // Trigger game over if no lives left
+            }
+            else
+            {
+                ResetPosition(); // Reuse existing function
+            }
         }
     }
 
