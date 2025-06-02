@@ -645,13 +645,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.146659, y: -0, z: -0, w: 0.9891871}
-  m_LocalPosition: {x: 0, y: 11.27, z: -59.65}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
+  m_LocalPosition: {x: 0, y: 11, z: -60}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 16.867, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,7 +1025,7 @@ GameObject:
   - component: {fileID: 928357407}
   - component: {fileID: 928357406}
   m_Layer: 5
-  m_Name: SelectCube
+  m_Name: SelectBoy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1510,7 +1510,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cube
+  m_text: Boy
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1952,7 +1952,7 @@ GameObject:
   - component: {fileID: 1687824679}
   - component: {fileID: 1687824678}
   m_Layer: 5
-  m_Name: SelectSphere
+  m_Name: SelectGirl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2163,12 +2163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f882fb10e5f304690e888244af4ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 8199368282381422084, guid: 669e4fb21323f16408a14b92c9e1cbbd,
-    type: 3}
-  spherePrefab: {fileID: 4378220237880588766, guid: 0e195fdf6a297fc40a8880573993c3aa,
-    type: 3}
-  cubeButton: {fileID: 928357406}
-  sphereButton: {fileID: 1687824678}
+  boyButton: {fileID: 928357406}
+  girlButton: {fileID: 1687824678}
 --- !u!114 &1723774935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2332,7 +2328,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sphere
+  m_text: Girl
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

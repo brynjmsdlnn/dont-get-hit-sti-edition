@@ -9,7 +9,7 @@ using TMPro;
 public class GameTimer : MonoBehaviour
 {
     [SerializeField] private TMP_Text timerText;
-    [SerializeField] private bool startOnAwake = true;
+    [SerializeField] private bool startOnAwake = false;
 
     private float elapsedTime = 0f;
     private bool isRunning = false;
