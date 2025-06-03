@@ -77,7 +77,8 @@ public class PlayerMovement : MonoBehaviour
             if (lives <= 0)
             {
                 // Notify GameManager directly
-                FindObjectOfType<GameManager>().GameOver();
+                GameManager gameManager = Object.FindFirstObjectByType<GameManager>();
+                gameManager.GameOver();
                 OnGameOver.Invoke();
             }
             else

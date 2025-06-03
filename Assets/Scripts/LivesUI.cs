@@ -17,7 +17,7 @@ public class LivesUI : MonoBehaviour
         }
         if (player == null)
         {
-            player = FindObjectOfType<PlayerMovement>();
+            player = FindFirstObjectByType<PlayerMovement>();
             Debug.Log(player ? "Found player automatically" : "No player found");
         }
     }
@@ -32,7 +32,7 @@ public class LivesUI : MonoBehaviour
             // Extra safety check
             if (player.lives <= 0)
             {
-                FindObjectOfType<GameManager>().GameOver();
+                FindFirstObjectByType<GameManager>().GameOver();
             }
         }
     }

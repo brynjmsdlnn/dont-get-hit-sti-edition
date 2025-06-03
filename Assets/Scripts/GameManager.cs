@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         // Find the timer if not assigned
         if (gameTimer == null)
         {
-            gameTimer = FindObjectOfType<GameTimer>();
+            gameTimer = FindFirstObjectByType<GameTimer>();
         }
 
         // Ensure timer is stopped at start
