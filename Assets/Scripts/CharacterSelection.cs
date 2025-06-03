@@ -12,8 +12,20 @@ public class CharacterSelection : MonoBehaviour
     void Awake()
     {
         // Initialize models
-        boyPreviewModel.SetActive(false);
-        girlPreviewModel.SetActive(false);
+        ResetPreviewModels();
+    }
+
+    void OnEnable()
+    {
+        cameraController.SetPreviewState();
+        boyPreviewModel.SetActive(true);
+        girlPreviewModel.SetActive(true);
+    }
+
+    void OnDisable()
+    {
+        cameraController.SetGameplayState();
+        ResetPreviewModels();
     }
 
     public void SelectCharacter(GameObject characterPrefab)
@@ -39,17 +51,20 @@ public class CharacterSelection : MonoBehaviour
         gameManager.StartGame();
     }
 
-    void OnEnable()
+    private void ResetPreviewModels()
     {
-        cameraController.SetPreviewState();
-        boyPreviewModel.SetActive(true);
-        girlPreviewModel.SetActive(true);
-    }
+        if (boyPreviewModel != null)
+        {
+            boyPreviewModel.SetActive(false);
+            var rotator = boyPreviewModel.GetComponent<CharacterPreviewRotator>();
+            if (rotator != null) rotator.ResetRotation();
+        }
 
-    void OnDisable()
-    {
-        cameraController.SetGameplayState();
-        boyPreviewModel.SetActive(false);
-        girlPreviewModel.SetActive(false);
+        if (girlPreviewModel != null)
+        {
+            girlPreviewModel.SetActive(false);
+            var rotator = girlPreviewModel.GetComponent<CharacterPreviewRotator>();
+            if (rotator != null) rotator.ResetRotation();
+        }
     }
 }

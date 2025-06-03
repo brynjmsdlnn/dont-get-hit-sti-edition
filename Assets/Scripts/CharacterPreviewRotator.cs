@@ -10,8 +10,7 @@ public class CharacterPreviewRotator : MonoBehaviour
 
     void Start()
     {
-        currentSpeed = baseSpeed;
-        targetSpeed = baseSpeed;
+        ResetRotation();
     }
 
     void Update()
@@ -28,5 +27,12 @@ public class CharacterPreviewRotator : MonoBehaviour
     public void OnHoverExit()
     {
         targetSpeed = baseSpeed;
+    }
+
+    public void ResetRotation()
+    {
+        currentSpeed = baseSpeed;
+        targetSpeed = baseSpeed;
+        transform.rotation = Quaternion.identity; // Reset to default rotation
     }
 }
