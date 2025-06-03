@@ -32,9 +32,9 @@ public class CharacterSelection : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        Vector3 spawnPosition = characterPrefab == boyPrefab ?
-            new Vector3(0.5f, -0.3f, -45f) :
-            new Vector3(0.5f, 0.16f, -45f);
+        Vector3 boySpawnPosition = new Vector3(0.5f, -0.3f, -45f);
+        Vector3 girlSpawnPosition = new Vector3(0.5f, 0.16f, -45f);
+        Vector3 spawnPosition = characterPrefab == boyPrefab ? boySpawnPosition : girlSpawnPosition;
 
         GameObject player = Instantiate(characterPrefab, spawnPosition, Quaternion.Euler(0, 90f, 0));
 
