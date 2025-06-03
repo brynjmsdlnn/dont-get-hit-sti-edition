@@ -1,16 +1,22 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class CharacterSelection : MonoBehaviour
 {
-    private GameObject boyPrefab;
-    private GameObject girlPrefab;
+    private Dictionary<GameObject, Vector3> characterSpawnPositions = new Dictionary<GameObject, Vector3>();
+    [SerializeField] private GameObject boyPrefab;
+    [SerializeField] private GameObject girlPrefab;
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameObject boyPreviewModel;
     [SerializeField] private GameObject girlPreviewModel;
 
     void Awake()
     {
+        // Initialize spawn positions
+        characterSpawnPositions[boyPrefab] = new Vector3(0.5f, -0.3f, -45f);
+        characterSpawnPositions[girlPrefab] = new Vector3(0.5f, 0.16f, -45f);
+
         // Initialize models
         ResetPreviewModels();
     }
@@ -32,26 +38,29 @@ public class CharacterSelection : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        Vector3 boySpawnPosition = new Vector3(0.5f, -0.3f, -45f);
-        Vector3 girlSpawnPosition = new Vector3(0.5f, 0.16f, -45f);
-        Vector3 spawnPosition = characterPrefab == boyPrefab ? boySpawnPosition : girlSpawnPosition;
+        if (characterSpawnPositions.TryGetValue(characterPrefab, out Vector3 spawnPosition))
+        {
+            GameObject player = Instantiate(characterPrefab, spawnPosition, Quaternion.Euler(0, 90f, 0));
 
-        GameObject player = Instantiate(characterPrefab, spawnPosition, Quaternion.Euler(0, 90f, 0));
+            // Update camera follow
+            if (Camera.main.TryGetComponent(out CameraFollow cameraFollow))
+                cameraFollow.target = player.transform;
 
-        // Update camera follow
-        if (Camera.main.TryGetComponent(out CameraFollow cameraFollow))
-            cameraFollow.target = player.transform;
+            // Update LivesUI
+            if (FindFirstObjectByType<LivesUI>() is LivesUI livesUI)
+                livesUI.player = player.GetComponent<PlayerMovement>();
 
-        // Update LivesUI
-        if (FindFirstObjectByType<LivesUI>() is LivesUI livesUI)
-            livesUI.player = player.GetComponent<PlayerMovement>();
-
-        gameObject.SetActive(false);
-        GameManager gameManager = FindFirstObjectByType<GameManager>();
-        gameManager.StartGame();
+            gameObject.SetActive(false);
+            GameManager gameManager = FindFirstObjectByType<GameManager>();
+            gameManager.StartGame();
+        }
+        else
+        {
+            Debug.LogError("Spawn position not found for the selected character prefab.");
+        }
     }
 
-    private void ResetPreviewModels()
+    public void ResetPreviewModels()
     {
         if (boyPreviewModel != null)
         {

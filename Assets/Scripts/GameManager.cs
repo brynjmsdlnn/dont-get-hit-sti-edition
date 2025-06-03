@@ -12,11 +12,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Show character selection at start
+        // Hide character selection at start (now handled by StartMenu)
         if (characterSelectionPanel != null)
-        {
-            characterSelectionPanel.SetActive(true);
-        }
+            characterSelectionPanel.SetActive(false);
 
         // Ensure game over panel is hidden at start
         if (gameOverPanel != null)
@@ -99,7 +97,12 @@ public class GameManager : MonoBehaviour
         if (characterSelectionPanel != null)
         {
             characterSelectionPanel.SetActive(true);
-            // This will trigger OnEnable which will show and reset the preview models
+            // Explicitly reset the preview models
+            CharacterSelection characterSelection = characterSelectionPanel.GetComponent<CharacterSelection>();
+            if (characterSelection != null)
+            {
+                characterSelection.ResetPreviewModels();
+            }
         }
 
         // Hide game over panel

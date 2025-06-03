@@ -29,7 +29,7 @@ public class ModelButton : MonoBehaviour,
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // Reset rotation spee
+        // Reset rotation speed
         if (rotator != null) rotator.OnHoverExit();
     }
 }
