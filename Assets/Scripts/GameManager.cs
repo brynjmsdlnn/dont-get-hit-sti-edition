@@ -28,6 +28,13 @@ public class GameManager : MonoBehaviour
         {
             gameTimer = FindObjectOfType<GameTimer>();
         }
+
+        // Ensure timer is stopped at start
+        if (gameTimer != null)
+        {
+            gameTimer.StopTimer();
+            gameTimer.ResetTimer();
+        }
     }
 
     public void StartGame()
