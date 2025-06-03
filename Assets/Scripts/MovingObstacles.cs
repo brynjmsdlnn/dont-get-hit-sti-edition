@@ -39,7 +39,7 @@ public class MovingObstacles : MonoBehaviour
     {
         float direction = moveRight ? 1 : -1;
         Vector3 velocity = new Vector3(moveSpeed * direction, 0, 0);
-        rb.velocity = velocity; // Move via Rigidbody
+        rb.linearVelocity = velocity; // Move via Rigidbody
 
         // Boundary check
         if ((moveRight && rb.position.x > boundary) || (!moveRight && rb.position.x < -boundary))
