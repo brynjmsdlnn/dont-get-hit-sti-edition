@@ -94,4 +94,17 @@ public class PlayerMovement : MonoBehaviour
         transform.position = startingPosition;
         isMoving = false; // Stop any ongoing movement
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("FinishLine"))
+        {
+            Debug.Log("Player reached the finish line!");
+            GameManager gameManager = FindFirstObjectByType<GameManager>();
+            if (gameManager != null)
+            {
+                gameManager.Victory();
+            }
+        }
+    }
 }

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject characterSelectionPanel;
     [SerializeField] private GameTimer gameTimer;
     [SerializeField] private LivesUI livesUI;
+    [SerializeField] private GameObject victoryPanel;
 
     private void Start()
     {
@@ -20,6 +21,12 @@ public class GameManager : MonoBehaviour
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(false);
+        }
+
+        // Ensure victory panel is hidden at start
+        if (victoryPanel != null)
+        {
+            victoryPanel.SetActive(false);
         }
 
         // Find the timer if not assigned
@@ -113,5 +120,23 @@ public class GameManager : MonoBehaviour
 
         // Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Victory()
+    {
+        // Show victory panel
+        if (victoryPanel != null)
+        {
+            victoryPanel.SetActive(true);
+        }
+
+        // Stop the timer
+        if (gameTimer != null)
+        {
+            gameTimer.StopTimer();
+        }
+
+        // Optional: Pause the game
+        Time.timeScale = 0f;
     }
 }
